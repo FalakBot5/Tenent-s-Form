@@ -609,7 +609,7 @@
                 <textarea type="text" name="Description" class="text-input" placeholder="Describe your issue"
                     required></textarea>
             </div>
-            <!-- Question 19: Text Example -->
+            <!-- Question 19: Upload Picture -->
             <div class="form-card">
                 <div class="question-text"><span class="question-number">Upload Picture <span
                             class="required">*</span></span></div>
@@ -626,7 +626,39 @@
 
         </form>
     </main>
-
+  <script>
+        document.getElementById('surveyForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+ 
+            const fileInput = document.getElementById('Upload').files[0];
+            const reader = new FileReader();
+ 
+            reader.onload = async function() {
+                const base64String = reader.result.split(',')[1]; // فصل رأس الـ Data URL
+ 
+                const payload = {
+                    userName: document.getElementById('fullname').value,
+                    imageBase64: base64String,
+                    imageName: fileInput.name
+                };
+ 
+                // استبدلي الرابط أدناه برابط الـ HTTP POST من Power Automate
+                const response = await fetch('https://defaulte567224693434e81af8b6cca8c435c.cf.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/26/workflows/552c900d81c24116b98005c8caa97868/triggers/manual/paths/invoke?api-version=1', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+ 
+                if(response.ok) {
+                    alert('تم إرسال الاستبيان بنجاح!');
+                } else {
+                    alert('حدث خطأ، حاول مرة أخرى.');
+                }
+            };
+ 
+            reader.readAsDataURL(fileInput);
+        });
+    </script>
     <script>
 
         //function to show and hide compund fields acording to the value of the compound dropdown list
