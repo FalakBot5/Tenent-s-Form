@@ -1,0 +1,872 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Page</title>
+    <style>
+        /* CSS Reset & Microsoft Forms Inspired Theme */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f3f2f1;
+            /* MS Forms light gray background */
+            color: #323130;
+            line-height: 1.5;
+            padding-bottom: 60px;
+        }
+
+        /* Header Styling */
+        .forms-header {
+            background-color: #039854;
+            color: #edebe9;
+            border-bottom: 1px solid #edebe9;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+        }
+
+        .forms-logo {
+            /* position: absolute;*/
+            left: 24px;
+            height: 36px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .forms-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #edebe9;
+            text-align: center;
+        }
+
+        /* Main Container */
+        .forms-container {
+            max-width: 680px;
+            margin: 24px auto;
+            padding: 0 16px;
+        }
+
+        /* Form Card Styling */
+        .form-card {
+            background-color: #ffffff;
+            border-radius: 4px;
+            padding: 24px;
+            margin-bottom: 16px;
+            box-shadow: 0 1.6px 3.6px 0 rgba(0, 0, 0, 0.13), 0 0.3px 0.9px 0 rgba(0, 0, 0, 0.11);
+            border: 1px solid transparent;
+            transition: border-color 0.2s ease;
+        }
+
+        .form-card:focus-within {
+            border-color: #0078d4;
+            /* MS Blue accent */
+        }
+
+        .question-number {
+            font-weight: 600;
+            color: #039854;
+            margin-right: 6px;
+        }
+
+        .question-text {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #323130;
+            margin-bottom: 16px;
+        }
+
+        /* Input Controls */
+        .text-input,
+        select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #8a8886;
+            border-radius: 2px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .text-input:focus {
+            border-color: #0078d4;
+            box-shadow: 0 0 0 1px #0078d4;
+        }
+
+        /* Radio Options */
+        /*  .radio-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            cursor: pointer;
+          /*  font-size: 0.95rem;
+        }
+ 
+       .radio-option input[type="radio"] {
+            margin-right: 10px;
+            accent-color: #039854;
+            transform: scale(1.1);
+        }*/
+
+        /* Submit Button Area */
+        .submit-container {
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 24px;
+        }
+
+        .submit-btn {
+            background-color: #039854;
+            color: #ffffff;
+            border: none;
+            border-radius: 2px;
+            padding: 10px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .submit-btn:hover {
+            background-color: #106ebe;
+        }
+
+        .submit-btn:active {
+            background-color: #005a9e;
+        }
+
+        .required {
+            color: #a80000;
+        }
+
+        /*.Options-img{
+ max-width: 150px;
+ max-height: 150px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 4px;
+
+}*/
+
+        /* Q9 Grid container */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 12px;
+            font-weight: normal;
+        }
+
+        .option-card {
+            border: 1px solid #ffffff;
+            background-color: #ffffff;
+            padding: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            transition: border-color 0.2s, background-color 0.2s;
+            font-weight: normal;
+        }
+
+        .option-card:hover {
+            background-color: #f3f2f1;
+            border-color: #8a8886;
+        }
+
+        .radio-label-row {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            font-weight: normal;
+        }
+
+        .radio-label-row label {
+            font-weight: normal;
+        }
+
+
+        .radio-label-row input[type="radio"] {
+            margin-right: 8px;
+            accent-color: #039854;
+            transform: scale(1.1);
+            cursor: pointer;
+        }
+
+        .Options-img {
+            margin-top: 10px;
+            width: 100%;
+            max-height: 80px;
+            object-fit: contain;
+            align-self: center;
+        }
+
+        .Categoriesradio-label-row input[type="radio"] {
+            margin-top: 20px;
+            margin-right: 8px;
+            accent-color: #039854;
+            transform: scale(1.1);
+            cursor: pointer;
+        }
+
+        @media (max-width:600px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header: Centered title with logo on the left -->
+    <header class="forms-header">
+        <img src="/FormPage/AlFalakwhitelogo.png" alt="Company Logo" class="forms-logo">
+        <h1 class="forms-title">Tenant’s Facility Helpdesk Form Request</h1>
+    </header>
+
+    <!-- Form Content Container -->
+    <main class="forms-container">
+        <!-- Wrap your Form or Dataverse Entity Form here -->
+        <form action="#" method="POST" id="ComplaintForm" onsubmit="submitCustomForm(event)">
+
+            <!-- Question 1: Text Example -->
+            <div class="form-card">
+                <div class="question-text">
+                    <span class="question-number">Please select your compound <span class="required ">*</span></span>
+                </div>
+                <select id="cmp_number" name="cmp_number"
+                    placeholder="If unknown, please check with reception, to get the correct number" required>
+                    <option name="cmp_number" value="">-- Select compound --</option>
+                    <option name="cmp_number" value="Compound 1">Compound 1</option>
+                    <option name="cmp_number" value="Compound 2">Compound 2</option>
+                    <option name="cmp_number" value="Compound 3">Compound 3</option>
+                    <option name="cmp_number" value="Compound 4">Compound 4</option>
+                </select>
+                <!--  <input type="text" class="text-input" placeholder="Enter your answer">-->
+            </div>
+
+
+            <!-- Question 2: Choice Example -->
+            <div class="form-card" style="display: none;" id="Compound_1_Apartments_Div">
+                <div class="question-text">
+                    <span class="question-number">Compound 1 Apartments <span class="required">*</span></span>
+                    <input type="text" class="text-input" id="Compound_1_Apartments" name="Compound_1_Apartments"
+                        placeholder="The value must be a number" required />
+                </div>
+
+            </div>
+            <!-- Question 3: Text Example -->
+            <div class="form-card" style="display: none;" id="Compound_2_Villas_Div">
+                <div class="question-text"><span class="question-number">Compound 2 Villas <span
+                            class="required">*</span></span></div>
+                <input type="text" class="text-input" id="Compound_2_Villas" name="Compound_2_Villas"
+                    placeholder="Please enter a number less than or equal to 26" required />
+            </div>
+
+            <!-- Question 4: Text Example -->
+            <div class="form-card" style="display: none;" id="Compound_3_Apartments_Div">
+                <div class="question-text"><span class="question-number">Compound 3 Apartments <span
+                            class="required">*</span></span></div>
+                <input type="text" class="text-input" id="Compound_3_Apartments" name="Compound_3_Apartments"
+                    placeholder="Please enter a number less than or equal to 48" required />
+            </div>
+            <!-- Question 5: Text Example -->
+            <div class="form-card" style="display: none;" id="Compound_4_Villas_Div">
+                <div class="question-text"><span class="question-number">Compound 4 Villas <span
+                            class="required">*</span></span></div>
+                <input type="text" class="text-input" id="Compound_4_Villas" name="Compound_4_Villas"
+                    placeholder="Please enter a number less than or equal to 8" required />
+            </div>
+
+
+
+            <!-- hide and show compound's questions using JS-->
+
+
+
+
+            <!-- Question 6: Text Example -->
+            <div class="form-card">
+                <div class="question-text"><span class="question-number">Full Name <span
+                            class="required">*</span></span></div>
+                <input type="text" class="text-input" id="fullname" name="fullname" placeholder="Enter your name"
+                    required />
+            </div>
+            <!-- Question 7: Text Example -->
+            <div class="form-card">
+                <div class="question-text"><span class="question-number">Requester Email <span
+                            class="required">*</span></span></div>
+                <input type="email" class="text-input" id="Requester_Email" name="Requester_Email"
+                    placeholder="Enter your email" required />
+            </div>
+            <!-- Question 8: Text Example -->
+            <div class="form-card">
+                <div class="question-text"><span class="question-number">Requester Mobile Number <span
+                            class="required">*</span></span></div>
+                <input type="number" class="text-input" id="Requester_Mobile_Number" name="Requester_Mobile_Number"
+                    placeholder="The value must be a number" required />
+            </div>
+
+            <!-- Question 9: Choice Example -->
+            <div class="form-card">
+                <div class="question-text">
+                    <span class="question-number">Please choose the type of complaint <span class="required">*</span>
+                </div>
+
+                <div class="options-grid">
+                    <!-- Option 1: Electrical -->
+                    <label class="option-card">
+                        <div class="radio-label-row">
+                            <input type="radio" name="complaintType" value="Electrical" required> Electrical
+                        </div>
+                        <img class="Options-img" src="/FormPage/Electrical.png" alt="Electrical" />
+                    </label>
+
+                    <!-- Option 2: Plumbing -->
+                    <label class="option-card">
+                        <div class="radio-label-row">
+                            <input type="radio" name="complaintType" value="Plumbing"> Plumbing
+                        </div>
+                        <img class="Options-img" src="/FormPage/Plumbing.png" alt="Plumbing" />
+                    </label>
+
+                    <!-- Option 3: Civil -->
+                    <label class="option-card">
+                        <div class="radio-label-row">
+                            <input type="radio" name="complaintType" value="Civil"> Civil
+                        </div>
+                        <img class="Options-img" src="/FormPage/civil.png" alt="ch3" />
+                    </label>
+
+                    <!-- Option 4: Air Conditioning -->
+                    <label class="option-card">
+                        <div class="radio-label-row">
+                            <input type="radio" name="complaintType" value="Air Conditioning"> Air Conditioning
+
+                        </div>
+                        <img class="Options-img" src="/FormPage/AirConditioning.png" alt="ch4" />
+                    </label>
+
+                    <!-- Option 5: Mechanical -->
+                    <label class="option-card">
+                        <div class="radio-label-row">
+                            <input type="radio" name="complaintType" value="Mechanical"> Mechanical
+
+                        </div>
+                        <img class="Options-img" src="/FormPage/Mechanical.png" alt="ch5" />
+                    </label>
+
+                    <!-- Option 6: Irrigation and Landscaping -->
+                    <label class="option-card">
+                        <div class="radio-label-row">
+                            <input type="radio" name="complaintType" value="Irrigation and Landscaping"> Irrigation &
+                            Landscaping
+
+                        </div>
+                        <img class="Options-img" src="/FormPage/Irrigation and Landscaping.png" alt="ch6" />
+                    </label>
+
+                    <!-- Option 7: Contractor -->
+                    <label class="option-card">
+                        <div class="radio-label-row">
+                            <input type="radio" name="complaintType" value="Contractor"> Contractor
+
+                        </div>
+                        <img class="Options-img" src="/FormPage/Contractor.png" alt="ch7" />
+                    </label>
+
+                    <!-- Option 8: Electrical Appliances -->
+                    <label class="option-card">
+                        <div class="radio-label-row">
+                            <input type="radio" name="complaintType" value="Electrical Appliances"> Electrical
+                            Appliances
+
+                        </div>
+                        <img class="Options-img" src="/FormPage/Electrical Appliances.png" alt="ch8" />
+                    </label>
+                </div>
+                <div class="Categoriesradio-label-row"></div>
+                <input type="radio" name="complaintType" value="Other"> Other
+                <input type="text" class="text-input" id="OtherCategory" name="OtherCategory"
+                    placeholder="Enter issue's category" />
+            </div>
+
+            </div>
+
+
+            </div>
+            <!-- Question 10: Text Example -->
+            <div class="form-card" style="display: none;" id="Electrical_Categories_Div">
+                <div class="question-text"><span class="question-number">Electrical Categories <span
+                            class="required">*</span></span></div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="Electrical_Categories" id="Electrical_Categories_options"
+                        value="Power Distribution & Panel Issues" required>Power
+                    Distribution & Panel Issues
+                </div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="Electrical_Categories" value="Wiring & Circuitry Issues">Wiring &
+                    Circuitry Issues
+                </div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="Electrical_Categories"
+                        value="Switches, Outlets and Fixture issues">Switches, Outlets and Fixture issues
+                </div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="Electrical_Categories" value="Safety & Hazard Issues">Safety & Hazard
+                    Issues
+                </div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="Electrical_Categories" value="Other">Other
+                    <input type="text" class="text-input" id="OtherCategory" name="OtherCategory"
+                        placeholder="Enter Other Electrical issue" />
+                </div>
+            </div>
+
+            <!-- Question 11: Text Example -->
+            <div class="form-card" style="display: none;" id="Plumbing_Categories_Div">
+                <div class="question-text"><span class="question-number">Plumbing Categories <span
+                            class="required">*</span></span></div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="Plumbing_Categories" value="Leak & Seepage Issues"
+                        id="Plumbing_Categories_options" required>Leak & Seepage Issues
+                </div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="Plumbing_Categories" value="Water Supply & Flow Issues">Water Supply &
+                    Flow Issues
+                </div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="Plumbing_Categories" value="Drainage & Sewer Issues">Drainage & Sewer
+                    Issues
+                </div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="Plumbing_Categories" value="Water Heating Systems">Water Heating Systems
+                </div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="Plumbing_Categories" value="Other">Other
+                    <input type="text" class="text-input" id="OtherCategory" name="OtherCategory"
+                        placeholder="Enter Other Plumbing issue" />
+                </div>
+            </div>
+            <!-- Question 12: Text Example -->
+            <div class="form-card" style="display: none;" id="Civil_Categories_Div">
+                <div class="question-text"><span class="question-number">Civil Categories <span
+                            class="required">*</span></span></div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="Civil_Categories" value="Contractual & Lease Disputes"
+                        id="Civil_Categories_options" required>Contractual & Lease
+                    Disputes
+                </div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="Civil_Categories" value="Habitability & Maintenance Rights">Habitability &
+                    Maintenance Rights
+                </div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="Civil_Categories" value="Quiet Enjoyment & Privacy">Quiet Enjoyment &
+                    Privacy
+                </div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="Civil_Categories" value="Property & Possession Disputes">Property &
+                    Possession Disputes
+                </div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="Civil_Categories" value="Other">Other
+                    <input type="text" class="text-input" id="OtherCategory" name="OtherCategory"
+                        placeholder="Enter Other Civil issue" />
+                </div>
+            </div>
+            <!-- Question 13: Text Example -->
+            <div class="form-card" style="display: none;" id="AirConditioning_Categories_Div">
+                <div class="question-text"><span class="question-number">Air Conditioning Categories <span
+                            class="required">*</span></span></div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="AirConditioning_Categories" value="Performance & Temperature Issues"
+                        id="AirConditioning_Categories_options" required>Performance & Temperature Issues
+                </div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="AirConditioning_Categories" value="Airflow & Quality Issues">Airflow &
+                    Quality Issues
+                </div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="AirConditioning_Categories" value="Noise & Mechanical Issues">Noise &
+                    Mechanical Issues
+                </div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="AirConditioning_Categories"
+                        value="Electrical & Safety Concerns">Electrical & Safety Concerns
+                </div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="AirConditioning_Categories" value="Other">Other
+                    <input type="text" class="text-input" id="OtherCategory" name="OtherCategory"
+                        placeholder="Enter Other Air Conditioning issue" />
+                </div>
+            </div>
+            <!-- Question 14: Text Example -->
+            <div class="form-card" style="display: none;" id="Mechanical_Categories_Div">
+                <div class="question-text"><span class="question-number">Mechanical Categories <span
+                            class="required">*</span></span></div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="Mechanical_Categories"
+                        value="Building Infrastructure & Vertical Transport" id="Mechanical_Categories_options"
+                        required>Building Infrastructure & Vertical
+                    Transport
+                </div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="Mechanical_Categories" value="HVAC Mechanical Components">HVAC Mechanical
+                    Components
+                </div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="Mechanical_Categories" value="Door & Window Hardware">Door & Window
+                    Hardware
+                </div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="Mechanical_Categories" value="Other">Other
+                    <input type="text" class="text-input" id="OtherCategory" name="OtherCategory"
+                        placeholder="Enter Other Mechanical issue" />
+                </div>
+            </div>
+            <!-- Question 15: Text Example -->
+            <div class="form-card" style="display: none;" id="IrrigationAndLandscaping_Categories_Div">
+                <div class="question-text"><span class="question-number">Irrigation and Landscaping Categories <span
+                            class="required">*</span></span></div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="IrrigationAndLandscaping_Categories" value="Infrastructure & Water"
+                        id="IrrigationAndLandscaping_Categories_options" required>Infrastructure & Water
+                </div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="IrrigationAndLandscaping_Categories"
+                        value="Aesthetics & Growth">Aesthetics & Growth
+                </div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="IrrigationAndLandscaping_Categories" value="Drainage & Grading">Drainage &
+                    Grading
+                </div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="IrrigationAndLandscaping_Categories" value="Other">Other
+                    <input type="text" class="text-input" id="OtherCategory" name="OtherCategory"
+                        placeholder="Enter Other Irrigation and Landscaping issue" />
+                </div>
+            </div>
+            <!-- Question 16: Text Example -->
+            <div class="form-card" style="display: none;" id="Contractor_Categories_Div">
+                <div class="question-text"><span class="question-number">Contractor Categories <span
+                            class="required">*</span></span></div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="Contractor_Categories" value="Quality & Workmanship"
+                        id="Contractor_Categories_options" required>Quality & Workmanship
+                </div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="Contractor_Categories" value="Professionalism & Conduct">AProfessionalism
+                    & Conduct
+                </div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="Contractor_Categories"
+                        value="Administrative & Financial Issues">Administrative & Financial Issues
+                </div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="Contractor_Categories" value="Other">Other
+                    <input type="text" class="text-input" id="OtherCategory" name="OtherCategory"
+                        placeholder="Enter Other Contractor issue" />
+                </div>
+            </div>
+            <!-- Question 17: Text Example -->
+            <div class="form-card" style="display: none;" id="ElectricalAppliances_Categories_Div">
+                <div class="question-text"><span class="question-number">Electrical Appliances Categories <span
+                            class="required">*</span></span></div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="ElectricalAppliances_Categories"
+                        id="ElectricalAppliances_Categories_options" value="Power & Operation Issues" required>Power &
+                    Operation Issues
+                </div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="ElectricalAppliances_Categories"
+                        value="Performance & Functional Issues">Performance & Functional Issues
+                </div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="ElectricalAppliances_Categories" value="ASafety & Hazard Issues">Safety &
+                    Hazard Issues
+                </div>
+                <div class="Categoriesradio-label-row">
+                    <input type="radio" name="ElectricalAppliances_Categories" value="Other">Other
+                    <input type="text" class="text-input" id="OtherCategory" name="OtherCategory"
+                        placeholder="Enter Other Electrical Appliances issue" />
+                </div>
+            </div>
+
+            <!-- Question 18: Text Example -->
+            <div class="form-card">
+                <div class="question-text"><span class="question-number">Description <span
+                            class="required">*</span></span></div>
+                <textarea type="text" name="Description" class="text-input" placeholder="Describe your issue"
+                    required></textarea>
+            </div>
+            <!-- Question 19: Text Example -->
+            <div class="form-card">
+                <div class="question-text"><span class="question-number">Upload Picture <span
+                            class="required">*</span></span></div>
+                <span style="color: #106ebe; font-size: small; margin-bottom: 20px;">Only pictures are allowed</span>
+                <input type="file" size="2mb" name="Upload" id="UploadedFile" accept=".jpg, .jpeg .png"
+                    class="text-input" placeholder="click here to upload" onchange="validateUploadedFile()">
+                <span id="FileMessage" style="color: red; font-size: small; margin-bottom: 20px;"></span>
+            </div>
+            <!-- Submit Button -->
+            <div class="submit-container">
+                <button type="submit" class="submit-btn">Submit</button>
+                <span id="submissionMSG"></span>
+            </div>
+
+        </form>
+    </main>
+
+    <script>
+
+        //function to show and hide compund fields acording to the value of the compound dropdown list
+        function initCompoundToggle() {
+            const cmpNumbers = document.querySelectorAll('select[name="cmp_number"]');
+
+            // Cache the elements to avoid repeated DOM lookups
+            const compoundElements = {
+                'Compound 1': {
+                    div: document.getElementById('Compound_1_Apartments_Div'),
+                    input: document.getElementById('Compound_1_Apartments')
+                },
+                'Compound 2': {
+                    div: document.getElementById('Compound_2_Villas_Div'),
+                    input: document.getElementById('Compound_2_Villas')
+                },
+                'Compound 3': {
+                    div: document.getElementById('Compound_3_Apartments_Div'),
+                    input: document.getElementById('Compound_3_Apartments')
+                },
+                'Compound 4': {
+                    div: document.getElementById('Compound_4_Villas_Div'),
+                    input: document.getElementById('Compound_4_Villas')
+                }
+            };
+
+            // Traditional for loop instead of forEach
+            for (let i = 0; i < cmpNumbers.length; i++) {
+                cmpNumbers[i].addEventListener('change', (e) => {
+                    const selectedValue = e.target.value;
+
+                    // Reset all sections (hide divs, remove required)
+                    for (let key in compoundElements) {
+                        compoundElements[key].div.style.display = 'none';
+                        compoundElements[key].input.removeAttribute('required');
+                    }
+
+                    // Activate the selected section if it exists in our map
+                    if (compoundElements[selectedValue]) {
+                        compoundElements[selectedValue].div.style.display = 'block';
+                        compoundElements[selectedValue].input.setAttribute('required', 'true');
+                    }
+                });
+            }
+        }
+
+        // Call the function
+        initCompoundToggle();
+
+
+        //function to show and hide complaint sub category fields acording to the value of the complaint type
+        function initComplaintTypeToggle() {
+            const complaintTypes = document.querySelectorAll('input[name="complaintType"]');
+
+            // Map complaint values to their respective DOM elements
+            const categoriesMap = {
+                'Electrical': {
+                    div: document.getElementById('Electrical_Categories_Div'),
+                    input: document.getElementById('Electrical_Categories_options')
+                },
+                'Plumbing': {
+                    div: document.getElementById('Plumbing_Categories_Div'),
+                    input: document.getElementById('Plumbing_Categories_options')
+                },
+                'Civil': {
+                    div: document.getElementById('Civil_Categories_Div'),
+                    input: document.getElementById('Civil_Categories_options')
+                },
+                'Air Conditioning': {
+                    div: document.getElementById('AirConditioning_Categories_Div'),
+                    input: document.getElementById('AirConditioning_Categories_options')
+                },
+                'Mechanical': {
+                    div: document.getElementById('Mechanical_Categories_Div'),
+                    input: document.getElementById('Mechanical_Categories_options')
+                },
+                'Irrigation and Landscaping': {
+                    div: document.getElementById('IrrigationAndLandscaping_Categories_Div'),
+                    input: document.getElementById('IrrigationAndLandscaping_Categories_options')
+                },
+                'Contractor': {
+                    div: document.getElementById('Contractor_Categories_Div'),
+                    input: document.getElementById('Contractor_Categories_options')
+                },
+                'Electrical Appliances': {
+                    div: document.getElementById('ElectricalAppliances_Categories_Div'),
+                    input: document.getElementById('ElectricalAppliances_Categories_options')
+                }
+            };
+
+            for (let i = 0; i < complaintTypes.length; i++) {
+                complaintTypes[i].addEventListener('change', (e) => {
+                    const selectedValue = e.target.value;
+
+                    // Reset all categories (hide divs and remove required attributes)
+                    for (let key in categoriesMap) {
+                        categoriesMap[key].div.style.display = 'none';
+                        categoriesMap[key].input.removeAttribute('required');
+                    }
+
+                    // If the selected value exists in our map, show it and set required
+                    if (categoriesMap[selectedValue]) {
+                        categoriesMap[selectedValue].div.style.display = 'block';
+                        categoriesMap[selectedValue].input.setAttribute('required', 'true');
+                    }
+                });
+            }
+        }
+
+        // Call the function
+        initComplaintTypeToggle();
+
+        //function to validate the uploaded file
+
+        function validateUploadedFile() {
+            const fileInput = document.getElementById('UploadedFile');
+            const filePath = fileInput.value;
+            const allowedExtensions = /\.(jpg|jpeg|png)$/i;
+            const DotsCount = (fileInput.files[0].name.match(/\./g) || []).length;
+            let isValid = false;
+
+
+            //if there are more than 1 dots then check the text after the first dot if its accepted extension
+            if (DotsCount > 1) {
+                const AfterDot1 = fileInput.files[0].name.substring(fileInput.files[0].name.indexOf('.') + 1);
+                isValid = !allowedExtensions.exec(AfterDot1);
+            } else {
+                isValid = !allowedExtensions.exec(fileInput.files[0].name);
+            }
+
+            if (isValid) {
+                document.getElementById('FileMessage').innerText = "Invalid file format. Please upload a valid file with one of the following formats: Jpeg, Png or Jpg";
+                fileInput.value = '';
+            } else {
+                return true;
+            }
+        }
+
+
+        //handle dataverse connection when submitting
+      /*  async function submitCustomForm(event) {
+            event.preventDefault(); // Prevent standard form submission
+
+            // 1. Gather values from your custom fields
+            const data = {
+                "cr1b8_compoundnumber": document.getElementById('cmp_number').value // Replace with your schema logical names
+                //"cra3a_email": document.getElementById('FieldEmail').value
+            };
+
+            try {
+                // 2. Send POST request to Power Pages Web API
+                const response = await fetch("/_api/cr1b8_tenentsrequestdata", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    document.getElementById('submissionMSG').innerText = "Data successfully saved to Dataverse!";
+                    // Clear form or redirect
+                } else {
+                    const errorData = await response.json();
+                    console.error("Error details:", errorData);
+                    document.getElementById('submissionMSG').innerText = "Submission failed. Please try again.";
+                }
+            } catch (error) {
+                console.error("Network error:", error);
+                document.getElementById('submissionMSG').innerText = "A network error occurred.";
+            }
+        }
+
+
+async function submitCustomForm(event) {
+  event.preventDefault();
+ 
+  const data = {
+    "cr1b8_compoundnumber": document.getElementById('cmp_number').value
+  };
+ 
+  // Use Power Pages built-in shell ajax helper which automatically injects the security token
+  shell.ajaxSafePost({
+    type: "POST",
+    url: "/_api/cr1b8_tenentsrequestdata",
+    contentType: "application/json",
+    data: JSON.stringify(data),
+    success: function () {
+      document.getElementById('submissionMSG').innerText = "Data successfully saved to Dataverse!";
+      document.getElementById('ComplaintForm').reset(); // Clear the form
+    },
+    error: function (xhr) {
+      console.error("Error details:", xhr);
+      document.getElementById('submissionMSG').innerText = "Submission failed: " + (xhr.responseJSON?.error?.message || "Please try again.");
+    }
+  });
+}*/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+async function submitCustomForm(event) {
+  event.preventDefault();
+ 
+  const data = {
+
+   "cr1b8_compoundnumber": document.getElementById('cmp_number').value
+  };
+ 
+  // Helper function to read the portal's security token cookie
+  function getCookie(name) {
+    let matches = document.cookie.match(new RegExp(
+      "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+    ));
+    return matches ? decodeURIComponent(matches[1]) : "";
+  }
+ 
+  const token = getCookie("__RequestVerificationToken");
+ 
+  try {
+    const response = await fetch("/_api/cr1b8_tenentsrequestdatas", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "RequestVerificationToken": token
+      },
+      body: JSON.stringify(data)
+    });
+ 
+    if (response.ok) {
+      document.getElementById('submissionMSG').innerText = "Data successfully saved to Dataverse!";
+      document.getElementById('ComplaintForm').reset();
+    } else {
+      const errorData = await response.json();
+      console.error("Error details:", errorData);
+      document.getElementById('submissionMSG').innerText = "Submission failed: " + (errorData.error?.message || "Please try again.");
+    }
+  } catch (error) {
+    console.error("Network error:", error);
+    document.getElementById('submissionMSG').innerText = "A network error occurred.";
+  }
+}
+    </script>
+</body>
